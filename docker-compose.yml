@@ -1,0 +1,19 @@
+# Define and execute multiple Docker Containers
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: myapp_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}         # user in db
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # passwrd in db
+      POSTGRES_DB: ${POSTGRES_DB}            # db name
+    ports:
+      - "5432:5432" # map from local port to container port
+    volumes:
+      - pgdata:/var/lib/postgresql/data # volume for persistence
+
+volumes:
+  pgdata: # volume name that persists data in database, so it does not get deleted when container is destroyed
