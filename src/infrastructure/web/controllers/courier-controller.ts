@@ -1,30 +1,25 @@
-import { Request, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import { InMemoryCourierDatabaseRepository } from '../../database/in-memory-courier-database-repository';
 import { CreateCourierUseCase } from '../../../application/use-cases/create-courier';
 
 const courierDatabaseRepository = new InMemoryCourierDatabaseRepository();
-const createCourier = new CreateCourierUseCase(courierDatabaseRepository);
+const createCourierUseCase = new CreateCourierUseCase(courierDatabaseRepository);
 
 export class CourierController {
-  constructor() {
-    this.create = this.create.bind(this);
-  }
-
-  public async create(req: Request, res: Response) {
+  static create: RequestHandler = async (req, res) => {
     const { name, email } = req.body;
-    const courier = await createCourier.execute({ name, email, updatedAt: null });
-    return res.status(201).json(courier);
-  }
+    const courier = await createCourierUseCase.execute({ name, email, updatedAt: null });
+    res.status(201).json(courier);
+  };
 
-  public async list(req: Request, res: Response) {
+  static list: RequestHandler = async (req, res) => {
     const couriers = await courierDatabaseRepository.findAll();
-    return res.json(couriers);
-  }
+    res.json(couriers);
+  };
 
-  public async getById(req: Request, res: Response) {
+  static getById: RequestHandler = async (req, res) => {
     const { id } = req.params;
-
     const courier = await courierDatabaseRepository.findById(id);
-    return res.json(courier);
-  }
+    res.json(courier);
+  };
 }
