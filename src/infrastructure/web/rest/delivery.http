@@ -1,0 +1,32 @@
+### Get all deliveries
+GET http://localhost:3333/deliveries
+Content-Type: application/json
+
+###
+
+### Create a new delivery
+POST http://localhost:3333/deliveries
+Content-Type: application/json
+
+{
+  "description": "Deliver package to office",
+  "address": "123 Main St",
+  "courierId": "f126d898-d60a-4fbd-9f0e-c71959de1476",
+  "status": "pending"
+}
+
+###
+
+### Get delivery by ID
+GET http://localhost:3333/deliveries/b98b94b6-f7bb-4a78-a8d7-88fe47d94ac0
+Content-Type: application/json
+
+###
+
+### Update delivery status
+PATCH http://localhost:3333/deliveries/a0926f3c-2ca2-4fc7-9bcb-15016506b94f
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
