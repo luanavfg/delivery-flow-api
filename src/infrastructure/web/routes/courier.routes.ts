@@ -1,25 +1,10 @@
+import { Router } from 'express';
 import { CourierController } from '../controllers/courier-controller';
-import  express  from 'express';
 
-async function appBootstrap() {
-  try {
-    const app = express();
-    const courierController = new CourierController();
+const router = Router();
 
-    app.get('/:id', courierController.getById);
-    app.get('/', courierController.list);
+router.get('/', CourierController.list);
+router.post('/', CourierController.create);
+router.get('/:id', CourierController.getById);
 
-    app.post('/', courierController.create)
-  }
-  catch(err) {
-    console.error('Erro during dynamic import', {
-      labels: {
-        module: 'appBootstrap',
-        error: err,
-      },
-    });
-  }
-}
-
-export default appBootstrap;
-
+export { router as courierRoutes };

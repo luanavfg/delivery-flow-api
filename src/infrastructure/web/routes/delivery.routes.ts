@@ -1,32 +1,12 @@
 import { Router } from 'express';
+import { DeliveryController } from '../controllers/delivery-controller';
 
-const deliveryRoutes = Router();
+const router = Router();
 
-type IDelivery = {
-  id: number;
-  courierId: number;
-  destinyAddress: string;
-  status: string;
-};
+router.get('/', DeliveryController.list);
+router.post('/', DeliveryController.create);
+router.get('/:id', DeliveryController.getById);
+router.patch('/:id', DeliveryController.update)
 
-const deliveries: Array<IDelivery> = [];
+export { router as deliveryRoutes };
 
-deliveryRoutes.get('/', (res) => res.json(deliveries));
-deliveryRoutes.post('/', (req, res) => {
-  const { courierId, destinyAddress } = req.body;
-  const newDelivery = { id: deliveries.length + 1, courierId, destinyAddress, status: 'pending' };
-  deliveries.push(newDelivery);
-  res.status(201).json(newDelivery);
-});
-
-deliveryRoutes.patch('/:id/status', async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-  const delivery = deliveries.find((d) => d.id === Number(id));
-  if (!delivery) return res.status(404).json({ error: 'Delivery not found' });
-  delivery.status = status;
-  res.json(delivery);
-});
-
-
-export { deliveryRoutes }

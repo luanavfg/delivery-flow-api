@@ -1,6 +1,6 @@
 import express from 'express';
-import { courierRoutes } from '../infrastructure/web/routes/courier.routes';
 import { deliveryRoutes } from '../infrastructure/web/routes/delivery.routes';
+import { courierRoutes } from '../infrastructure/web/routes/courier.routes';
 
 const app = express();
 app.use(express.json());
