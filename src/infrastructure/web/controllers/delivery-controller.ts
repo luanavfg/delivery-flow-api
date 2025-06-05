@@ -2,8 +2,9 @@ import { Request, RequestHandler, Response } from 'express';
 import { InMemoryDeliveryDatabaseRepository } from '../../database/in-memory-delivery-database-repository';
 import { CreateDeliveryUseCase } from '../../../application/use-cases/create-delivery';
 import { UpdateDeliveryUseCase } from '../../../application/use-cases/update-delivery';
+import { PrismaDeliveryRepository } from '../../database/prisma/repositories/prisma-delivery-repository';
 
-const deliveryDatabaseRepository = new InMemoryDeliveryDatabaseRepository();
+const deliveryDatabaseRepository = new PrismaDeliveryRepository();
 const createDeliveryUseCase = new CreateDeliveryUseCase(deliveryDatabaseRepository);
 const updateDeliveryUseCase = new UpdateDeliveryUseCase(deliveryDatabaseRepository);
 
