@@ -13,6 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum DeliveryStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELED
+}
+
 model Courier {
   id        String     @id @default(uuid())
   name      String
@@ -23,11 +30,12 @@ model Courier {
 }
 
 model Delivery {
-  id        String    @id @default(uuid())
-  item      String
-  status    String
-  courierId String
-  courier   Courier   @relation(fields: [courierId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime?
+  id             String         @id @default(uuid())
+  item           String
+  status         DeliveryStatus
+  destinyAddress String
+  courierId      String
+  courier        Courier        @relation(fields: [courierId], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime?
 }
