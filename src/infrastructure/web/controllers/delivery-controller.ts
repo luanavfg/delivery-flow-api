@@ -10,8 +10,9 @@ const updateDeliveryUseCase = new UpdateDeliveryUseCase(deliveryDatabaseReposito
 
 export class DeliveryController {
   static create: RequestHandler = async(req, res) => {
-    const { courierId, destinyAddress, status } = req.body;
-    const delivery = await createDeliveryUseCase.execute({ courierId, destinyAddress, status, updatedAt: null });
+    const { courierId, destinyAddress, status, item } = req.body;
+   
+    const delivery = await createDeliveryUseCase.execute({ courierId, destinyAddress, status, item, updatedAt: null });
     res.status(201).json(delivery);
   }
 
@@ -24,6 +25,12 @@ export class DeliveryController {
     const { id } = req.params;
     const delivery = await deliveryDatabaseRepository.findById(id);
     res.json(delivery);
+  };
+
+  static getByCourierId: RequestHandler = async (req, res) => {
+    const { courierId } = req.params;
+    const deliveries = await deliveryDatabaseRepository.findByCourierId(courierId);
+    res.json(deliveries);
   };
 
   static update: RequestHandler = async(req, res) => {
