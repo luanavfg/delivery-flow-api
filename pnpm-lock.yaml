@@ -17,6 +17,9 @@ importers:
       faker:
         specifier: ^6.6.6
         version: 6.6.6
+      zod:
+        specifier: ^3.25.55
+        version: 3.25.55
     devDependencies:
       '@faker-js/faker':
         specifier: ^9.8.0
@@ -683,6 +686,9 @@ packages:
   yn@3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
     engines: {node: '>=6'}
+
+  zod@3.25.55:
+    resolution: {integrity: sha512-219huNnkSLQnLsQ3uaRjXsxMrVm5C9W3OOpEVt2k5tvMKuA8nBSu38e0B//a+he9Iq2dvmk2VyYVlHqiHa4YBA==}
 
 snapshots:
 
@@ -1359,3 +1365,5 @@ snapshots:
   xtend@4.0.2: {}
 
   yn@3.1.1: {}
+
+  zod@3.25.55: {}
