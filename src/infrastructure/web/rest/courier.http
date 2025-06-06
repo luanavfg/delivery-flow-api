@@ -9,12 +9,12 @@ POST http://localhost:3333/couriers
 Content-Type: application/json
 
 {
-  "name": "Jane Doe",
-  "email": "jane.doe@example.com"
+  "name": "John Doe",
+  "email": "john.doe@example.com"
 }
 
 ###
 
 ### Get courier by ID
-GET http://localhost:3333/couriers/63c73efe-0f40-47f8-9286-e2417243e1bb
+GET http://localhost:3333/couriers/e8303320-569a-4863-8476-5169b1a410da
 Content-Type: application/json

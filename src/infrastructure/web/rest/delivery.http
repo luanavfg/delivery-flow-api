@@ -9,10 +9,10 @@ POST http://localhost:3333/deliveries
 Content-Type: application/json
 
 {
-  "description": "Deliver package to office",
-  "address": "123 Main St",
-  "courierId": "f126d898-d60a-4fbd-9f0e-c71959de1476",
-  "status": "pending"
+  "item": "Item three",
+  "destinyAddress": "123 Main St",
+  "courierId": "e8303320-569a-4863-8476-5169b1a410da",
+  "status": "PENDING"
 }
 
 ###
@@ -23,10 +23,16 @@ Content-Type: application/json
 
 ###
 
+### Get all deliveries by courier ID
+GET http://localhost:3333/deliveries/courier/e8303320-569a-4863-8476-5169b1a410da
+Content-Type: application/json
+
+###
+
 ### Update delivery status
-PATCH http://localhost:3333/deliveries/a0926f3c-2ca2-4fc7-9bcb-15016506b94f
+PATCH http://localhost:3333/deliveries/7e111a12-62c2-4479-aa86-d98b6927afc5
 Content-Type: application/json
 
 {
-  "status": "delivered"
+  "status": "COMPLETED"
 }
