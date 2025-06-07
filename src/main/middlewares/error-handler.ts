@@ -1,13 +1,25 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import { ZodError } from 'zod';
+import { ApplicationError } from '../../core/errors/application-error';
+import { NotFoundError } from '../../core/errors/not-found-error';
+import { ValidationError } from '../../core/errors/validation-error';
 
-export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
-  console.log(err)
+export const errorHandler: ErrorRequestHandler = (error, req, res, next) => {
+  if (
+    error instanceof ApplicationError ||
+    error instanceof NotFoundError ||
+    error instanceof ValidationError
+  ) {
+    res.status(error.statusCode).json({ error: error.message });
+    return;
+  }
 
-  const status = err.statusCode || 500
-  const message = err.message || 'Internal server error'
+  if (error instanceof ZodError) {
+    res.status(400).json({ error: error.errors });
+    return;
+  }
 
-  res.status(status).json({
-    message,
-    error: process.env.NODE_ENV === 'DEVELOPMENT' ? err : undefined
-  })
-}
+  console.error(error);
+
+  res.status(500).json({ error: 'Internal server error' });
+};
