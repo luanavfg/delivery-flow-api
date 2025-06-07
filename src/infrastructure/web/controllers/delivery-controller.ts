@@ -3,6 +3,7 @@ import { InMemoryDeliveryDatabaseRepository } from '../../database/in-memory-del
 import { CreateDeliveryUseCase } from '../../../application/use-cases/create-delivery';
 import { UpdateDeliveryUseCase } from '../../../application/use-cases/update-delivery';
 import { PrismaDeliveryRepository } from '../../database/prisma/repositories/prisma-delivery-repository';
+import z from 'zod';
 
 const deliveryDatabaseRepository = new PrismaDeliveryRepository();
 const createDeliveryUseCase = new CreateDeliveryUseCase(deliveryDatabaseRepository);
@@ -34,7 +35,11 @@ export class DeliveryController {
   };
 
   static update: RequestHandler = async(req, res) => {
-    const { id } = req.params;
+    const idParamSchema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = idParamSchema.parse(req.params)
     const { status } = req.body;
     
     const delivery = await updateDeliveryUseCase.execute({id, status});
