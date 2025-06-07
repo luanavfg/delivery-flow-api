@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { CourierController } from '../controllers/courier-controller';
 import { validate } from '../../../main/middlewares/validate';
-import { createCourierSchema } from '../../../application/schemas/create-courier.schema';
+import { createCourierSchema } from '../schemas/create-courier.schema';
 
 const router = Router();
 

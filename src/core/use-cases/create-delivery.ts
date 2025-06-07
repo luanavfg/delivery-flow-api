@@ -1,5 +1,5 @@
-import { IDeliveryEntity } from "../../domain/entities/delivery/types";
-import { DeliveryDatabaseRepository } from "../../domain/repositories/delivery-database-repository";
+import { IDeliveryEntity } from "../../core/entities/delivery/types";
+import { DeliveryDatabaseRepository } from "../../core/repositories/delivery-database-repository";
 
 export class CreateDeliveryUseCase {
   constructor(private deliveryDatabaseRepository: DeliveryDatabaseRepository) {}

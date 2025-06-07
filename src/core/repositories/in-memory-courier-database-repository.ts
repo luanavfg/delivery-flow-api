@@ -1,5 +1,5 @@
-import { ICourierEntity } from "../../domain/entities/courier/types";
-import { CourierDatabaseRepository } from "../../domain/repositories/courier-database-repository";
+import { ICourierEntity } from "../entities/courier/types";
+import { CourierDatabaseRepository } from "./courier-database-repository";
 import { faker } from '@faker-js/faker'
 
 export class InMemoryCourierDatabaseRepository implements CourierDatabaseRepository {

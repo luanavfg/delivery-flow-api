@@ -1,5 +1,5 @@
-import { IDeliveryEntity } from "../../domain/entities/delivery/types";
-import { DeliveryDatabaseRepository } from "../../domain/repositories/delivery-database-repository";
+import { IDeliveryEntity } from "../entities/delivery/types";
+import { DeliveryDatabaseRepository } from "./delivery-database-repository";
 import { faker } from '@faker-js/faker'
 
 export class InMemoryDeliveryDatabaseRepository implements DeliveryDatabaseRepository {

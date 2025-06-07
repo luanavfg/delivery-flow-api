@@ -1,5 +1,5 @@
-import { ICourierEntity } from "../../domain/entities/courier/types";
-import { CourierDatabaseRepository } from "../../domain/repositories/courier-database-repository";
+import { ICourierEntity } from "../../core/entities/courier/types";
+import { CourierDatabaseRepository } from "../../core/repositories/courier-database-repository";
 
 export class CreateCourierUseCase {
   constructor(private courierDatabaseRepository: CourierDatabaseRepository) {}

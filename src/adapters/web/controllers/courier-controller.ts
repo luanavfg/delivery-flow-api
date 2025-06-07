@@ -1,7 +1,7 @@
 import { Request, RequestHandler, Response } from 'express';
-import { InMemoryCourierDatabaseRepository } from '../../database/in-memory-courier-database-repository';
-import { CreateCourierUseCase } from '../../../application/use-cases/create-courier';
+import { InMemoryCourierDatabaseRepository } from '../../../core/repositories/in-memory-courier-database-repository';
 import { PrismaCourierRepository } from '../../database/prisma/repositories/prisma-courier-repository';
+import { CreateCourierUseCase } from '../../../core/use-cases/create-courier';
 
 const courierDatabaseRepository = new PrismaCourierRepository();
 const createCourierUseCase = new CreateCourierUseCase(courierDatabaseRepository);

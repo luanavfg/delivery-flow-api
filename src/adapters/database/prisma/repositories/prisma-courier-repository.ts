@@ -1,5 +1,5 @@
-import { ICourierEntity } from "../../../../domain/entities/courier/types";
-import { CourierDatabaseRepository } from "../../../../domain/repositories/courier-database-repository";
+import { ICourierEntity } from "../../../../core/entities/courier/types";
+import { CourierDatabaseRepository } from "../../../../core/repositories/courier-database-repository";
 import { prisma } from "../prisma-client";
 
 export class PrismaCourierRepository implements CourierDatabaseRepository {

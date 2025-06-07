@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { DeliveryController } from '../controllers/delivery-controller';
 import { validate } from '../../../main/middlewares/validate';
-import { createDeliverySchema } from '../../../application/schemas/create-delivery.schema';
-import { updateDeliverySchema } from '../../../application/schemas/update-delivery-schema';
+import { createDeliverySchema } from '../schemas/create-delivery.schema';
+import { updateDeliverySchema } from '../schemas/update-delivery-schema';
 
 const router = Router();
 

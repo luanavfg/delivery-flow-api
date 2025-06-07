@@ -1,6 +1,6 @@
 import express from 'express';
-import { deliveryRoutes } from '../infrastructure/web/routes/delivery.routes';
-import { courierRoutes } from '../infrastructure/web/routes/courier.routes';
+import { deliveryRoutes } from '../adapters/web/routes/delivery.routes';
+import { courierRoutes } from '../adapters/web/routes/courier.routes';
 import { errorHandler } from './middlewares/error-handler';
 
 const app = express();
