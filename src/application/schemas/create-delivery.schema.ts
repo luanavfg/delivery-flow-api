@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const createDeliverySchema = z.object({
   item: z.string().min(1),
-  courierId: z.string(),
+  courierId: z.string().uuid(),
   destinyAddress: z.string().min(1),
   status: z.enum(['PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELED']),
 })
