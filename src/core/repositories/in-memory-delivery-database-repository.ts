@@ -26,8 +26,8 @@ export class InMemoryDeliveryDatabaseRepository implements DeliveryDatabaseRepos
     return newDelivery;
   }
 
-  async update(inputDto: { id: string; status: IDeliveryEntity["status"]; }): Promise<IDeliveryEntity> {
-    const {id, status: newStatus} = inputDto
+  async update(inputDto: Omit<IDeliveryEntity, 'createdAt' | 'item'>): Promise<IDeliveryEntity> {
+    const {id, status: newStatus, courierId, destinyAddress, updatedAt} = inputDto
 
     const deliveryFromDatabase = this.deliveries.find((delivery) => delivery.id === id) ?? null
 
@@ -36,7 +36,9 @@ export class InMemoryDeliveryDatabaseRepository implements DeliveryDatabaseRepos
     }
 
     deliveryFromDatabase.status = newStatus
-    deliveryFromDatabase.updatedAt = new Date()
+    deliveryFromDatabase.updatedAt = updatedAt
+    deliveryFromDatabase.courierId = courierId
+    deliveryFromDatabase.destinyAddress = destinyAddress
 
     return deliveryFromDatabase
   }
