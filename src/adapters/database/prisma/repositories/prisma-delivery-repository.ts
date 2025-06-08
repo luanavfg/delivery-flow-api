@@ -26,12 +26,12 @@ export class PrismaDeliveryRepository implements DeliveryDatabaseRepository {
     return delivery
   }
 
-  async update(inputDto: { id: string; status: IDeliveryEntity["status"]; }): Promise<IDeliveryEntity> {
-    const { id, status: newStatus } = inputDto
+  async update(inputDto: Omit<IDeliveryEntity, | 'createdAt' | 'item'>): Promise<IDeliveryEntity> {
+    const { id, status: newStatus, courierId, destinyAddress, updatedAt } = inputDto
 
     const delivery = await prisma.delivery.update({
       where: { id },
-      data: { status: newStatus, updatedAt: new Date() }
+      data: inputDto
     })
 
     return delivery

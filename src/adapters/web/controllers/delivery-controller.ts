@@ -2,18 +2,20 @@ import { Request, RequestHandler, Response } from 'express';
 import { InMemoryDeliveryDatabaseRepository } from '../../../core/repositories/in-memory-delivery-database-repository';
 import { PrismaDeliveryRepository } from '../../database/prisma/repositories/prisma-delivery-repository';
 import z from 'zod';
-import { CreateDeliveryUseCase } from '../../../core/use-cases/create-delivery';
-import { UpdateDeliveryUseCase } from '../../../core/use-cases/update-delivery';
+import { CreateDeliveryUseCase } from '../../../core/use-cases/delivery/create-delivery';
+import { UpdateDeliveryUseCase } from '../../../core/use-cases/delivery/update-delivery';
+import { PrismaCourierRepository } from '../../database/prisma/repositories/prisma-courier-repository';
 
 const deliveryDatabaseRepository = new PrismaDeliveryRepository();
-const createDeliveryUseCase = new CreateDeliveryUseCase(deliveryDatabaseRepository);
+const courierDatabaseRepository = new PrismaCourierRepository();
+const createDeliveryUseCase = new CreateDeliveryUseCase(deliveryDatabaseRepository, courierDatabaseRepository);
 const updateDeliveryUseCase = new UpdateDeliveryUseCase(deliveryDatabaseRepository);
 
 export class DeliveryController {
   static create: RequestHandler = async(req, res) => {
     const { courierId, destinyAddress, status, item } = req.body;
    
-    const delivery = await createDeliveryUseCase.execute({ courierId, destinyAddress, status, item, updatedAt: null });
+    const delivery = await createDeliveryUseCase.execute({ courierId, destinyAddress, status, item});
     res.status(201).json(delivery);
   }
 
@@ -40,9 +42,14 @@ export class DeliveryController {
     })
 
     const { id } = idParamSchema.parse(req.params)
-    const { status } = req.body;
+    const { status, destinyAddress, courierId} = req.body;
     
-    const delivery = await updateDeliveryUseCase.execute({id, status});
+    const delivery = await updateDeliveryUseCase.execute({
+      id,
+      courierId,
+      destinyAddress,
+      status
+    });
     res.status(201).json(delivery);
   }
 }
