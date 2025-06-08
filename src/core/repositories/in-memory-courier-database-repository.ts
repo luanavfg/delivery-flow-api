@@ -18,4 +18,8 @@ export class InMemoryCourierDatabaseRepository implements CourierDatabaseReposit
   async findById(id: string): Promise<ICourierEntity | null> {
     return this.couriers.find(courier => courier.id === id) ?? null;
   }
+
+  async findByEmail(email: string): Promise<ICourierEntity | null> {
+    return this.couriers.find(courier => courier.email === email) ?? null;
+  }
 }
