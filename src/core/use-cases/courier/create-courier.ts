@@ -14,6 +14,8 @@ export class CreateCourierUseCase {
       throw new EmailConflictError()
     }
     
-    return this.courierDatabaseRepository.create(data);
+    return this.courierDatabaseRepository.create({
+      ...data, updatedAt: null
+    });
   }
 }

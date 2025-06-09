@@ -20,8 +20,7 @@ export class CreateDeliveryUseCase {
       throw new ValidationError('Courier not found.');
     }
 
-    const deliveryToCreate: IDeliveryEntity = {
-      id: faker.database.mongodbObjectId(), // TODO - Change this
+    const deliveryToCreate: Omit<IDeliveryEntity, 'id'> = {
       courierId,
       item,
       destinyAddress,
