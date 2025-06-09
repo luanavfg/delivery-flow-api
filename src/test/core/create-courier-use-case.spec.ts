@@ -1,34 +1,38 @@
-// import { InMemoryCourierDatabaseRepository } from "../../core/repositories/in-memory-courier-database-repository";
-// import { CreateCourierUseCase } from "../../core/use-cases/courier/create-courier";
+import { CourierDatabaseRepository } from "../../core/repositories/courier-database-repository";
+import { InMemoryCourierDatabaseRepository } from "../../core/repositories/in-memory-courier-database-repository";
+import { CreateCourierUseCase } from "../../core/use-cases/courier/create-courier";
 
-// describe('CreateCourierUseCase', () => {
-//   it('should create a courier successfully', async () => {
-//     const repository = new InMemoryCourierDatabaseRepository();
-//     const useCase = new CreateCourierUseCase(repository);
+describe('CreateCourierUseCase', () => {
 
-//     const result = await useCase.execute({
-//       name: 'John Doe',
-//       email: 'john@example.com',
-//     });
+  let courierDatabaseRepository: CourierDatabaseRepository
+  let createCourierUseCase: CreateCourierUseCase
 
-//     expect(result).toHaveProperty('id');
-//     expect(result.name).toBe('John Doe');
-//   });
+  beforeEach(() => {
+    courierDatabaseRepository = new InMemoryCourierDatabaseRepository();
+    createCourierUseCase = new CreateCourierUseCase(courierDatabaseRepository);
+  })
 
-//   it('should not allow duplicate email', async () => {
-//     const repository = new InMemoryCourierRepository();
-//     const useCase = new CreateCourierUseCase(repository);
+  it('should create a courier successfully', async () => {
+    const result = await createCourierUseCase.execute({
+      name: 'John Doe',
+      email: 'john@example.com',
+    });
 
-//     await useCase.execute({
-//       name: 'First User',
-//       email: 'duplicate@example.com'
-//     });
+    expect(result).toHaveProperty('id');
+    expect(result.name).toBe('John Doe');
+  });
 
-//     await expect(
-//       useCase.execute({
-//         name: 'Second User',
-//         email: 'duplicate@example.com'
-//       })
-//     ).rejects.toThrow('Courier with this email already exists.');
-//   });
-// });
+  it('should not allow duplicate email', async () => {
+    await createCourierUseCase.execute({
+      name: 'First User',
+      email: 'duplicate@example.com'
+    });
+
+    await expect(
+      createCourierUseCase.execute({
+        name: 'Second User',
+        email: 'duplicate@example.com'
+      })
+    ).rejects.toThrow('This email is already in use.');
+  });
+});
