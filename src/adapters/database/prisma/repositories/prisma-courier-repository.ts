@@ -12,7 +12,7 @@ export class PrismaCourierRepository implements CourierDatabaseRepository {
 
   async findAll(): Promise<ICourierEntity[]> {
     const couriers = await prisma.courier.findMany()
-    
+
     return couriers
   }
 
