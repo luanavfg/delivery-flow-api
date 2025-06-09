@@ -6,11 +6,12 @@ import { errorHandler } from './middlewares/error-handler';
 const app = express();
 
 app.use(express.json());
-
 app.use('/couriers', courierRoutes);
 app.use('/deliveries', deliveryRoutes);
-
-// Error handler middleware should be registered after all routes and middleware
 app.use(errorHandler);
 
-app.listen(3333, () => console.log('🚀 Server running on port 3333'));
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(3333, () => console.log('🚀 Server running on port 3333'));
+}
+
+export { app };
