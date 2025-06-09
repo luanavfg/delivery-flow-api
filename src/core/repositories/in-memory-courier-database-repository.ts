@@ -11,6 +11,7 @@ export class InMemoryCourierDatabaseRepository implements CourierDatabaseReposit
 
   async create(data: Omit<ICourierEntity, 'id' | 'createdAt' | 'updatedAt'>): Promise<ICourierEntity> {
     const newCourier = { id: faker.string.uuid(), ...data, createdAt: new Date(), updatedAt: null };
+    
     this.couriers.push(newCourier);
     return newCourier;
   }
