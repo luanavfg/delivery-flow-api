@@ -5,4 +5,5 @@ export abstract class CourierDatabaseRepository {
   abstract findById(id: string): Promise<ICourierEntity | null>;
   abstract findByEmail(email: string): Promise<ICourierEntity | null>;
   abstract create(data: Omit<ICourierEntity, 'id' | 'createdAt'>): Promise<ICourierEntity>;
+  abstract deleteAll(): Promise<void>;
 }

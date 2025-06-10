@@ -3,7 +3,6 @@ import { CourierDatabaseRepository } from "../../../../core/repositories/courier
 import { prisma } from "../prisma-client";
 
 export class PrismaCourierRepository implements CourierDatabaseRepository {
-
   async create(data: Omit<ICourierEntity, 'id' | 'createdAt'>): Promise<ICourierEntity> {
     const courier = await prisma.courier.create({ data })
 
@@ -26,5 +25,10 @@ export class PrismaCourierRepository implements CourierDatabaseRepository {
     const courier = await prisma.courier.findUnique({ where: { email } })
     
     return courier ?? null
+  }
+
+  async deleteAll(): Promise<void> {
+    await prisma.delivery.deleteMany()
+    await prisma.courier.deleteMany()
   }
 }
