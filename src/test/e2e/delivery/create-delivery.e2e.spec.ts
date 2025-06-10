@@ -1,16 +1,19 @@
 import request from 'supertest';
 import { CourierDatabaseRepository } from '../../../core/repositories/courier-database-repository';
-import { InMemoryCourierDatabaseRepository } from '../../../core/repositories/in-memory-courier-database-repository';
 import { app } from '../../../main/server';
+import { PrismaCourierRepository } from '../../../adapters/database/prisma/repositories/prisma-courier-repository';
+import { faker } from '@faker-js/faker/.';
 
-// IN PROGRESS
 describe('Create Delivery (e2e)', () => {
   let courierId: string;
   let courierDatabaseRepository: CourierDatabaseRepository;
 
-  beforeAll(async () => {
-    courierDatabaseRepository = new InMemoryCourierDatabaseRepository();
+  beforeEach(async () => {
+    courierDatabaseRepository = new PrismaCourierRepository();
+    await courierDatabaseRepository.deleteAll();
+  });
 
+  it('should create a delivery successfully', async () => {
     const courier = await courierDatabaseRepository.create({
       email: 'courier@test.com',
       name: 'Courier Test',
@@ -18,9 +21,7 @@ describe('Create Delivery (e2e)', () => {
     });
 
     courierId = courier.id;
-  });
 
-  it('should create a delivery successfully', async () => {
     const response = await request(app).post('/deliveries').send({
       item: 'Box A',
       destinyAddress: '456 Final Ave',
@@ -37,7 +38,7 @@ describe('Create Delivery (e2e)', () => {
   it('should return 400 if required fields are missing', async () => {
     const response = await request(app).post('/deliveries').send({
       item: 'Box B',
-      // missing destinyAddress, courierId
+      // missing destinyAddress, courierId andf status
     });
 
     expect(response.status).toBe(400);
@@ -47,7 +48,7 @@ describe('Create Delivery (e2e)', () => {
     const response = await request(app).post('/deliveries').send({
       item: 'Box C',
       destinyAddress: '789 Y',
-      courierId: 'non-existent-id',
+      courierId: faker.string.uuid(),
       status: 'COMPLETED'
     });
 

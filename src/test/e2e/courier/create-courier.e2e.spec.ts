@@ -1,13 +1,22 @@
 import request from 'supertest'
 import { app } from '../../../main/server';
+import { CourierDatabaseRepository } from '../../../core/repositories/courier-database-repository';
+import { PrismaCourierRepository } from '../../../adapters/database/prisma/repositories/prisma-courier-repository';
 
 describe('POST /couriers', () => {
+  let courierDatabaseRepository: CourierDatabaseRepository;
+
+  beforeEach(async () => {
+    courierDatabaseRepository = new PrismaCourierRepository();
+    await courierDatabaseRepository.deleteAll();
+  });
+  
   it('should create a courier successfully', async () => {
     const response = await request(app)
       .post('/couriers')
       .send({
         name: 'Jane Doe',
-        email: `jane-${Date.now()}@example.com` // evita duplicidade no teste
+        email: `jane-doe@example.com`
       });
 
     expect(response.status).toBe(201);
