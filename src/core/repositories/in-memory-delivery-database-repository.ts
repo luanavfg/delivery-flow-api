@@ -42,4 +42,8 @@ export class InMemoryDeliveryDatabaseRepository implements DeliveryDatabaseRepos
 
     return deliveryFromDatabase
   }
+
+  async deleteAll(): Promise<void> {
+    this.deliveries = [];
+  }
 }

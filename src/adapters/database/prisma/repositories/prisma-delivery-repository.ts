@@ -36,4 +36,8 @@ export class PrismaDeliveryRepository implements DeliveryDatabaseRepository {
 
     return delivery
   }
+
+  async deleteAll(): Promise<void> {
+    await prisma.delivery.deleteMany()
+  }
 }

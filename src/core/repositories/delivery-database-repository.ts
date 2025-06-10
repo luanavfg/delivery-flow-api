@@ -6,4 +6,5 @@ export abstract class DeliveryDatabaseRepository {
   abstract findByCourierId(courierId: string): Promise<IDeliveryEntity[] | null>;
   abstract create(inputDto: Omit<IDeliveryEntity, 'id' | 'createdAt'>): Promise<IDeliveryEntity>;
   abstract update(inputDto: Omit<IDeliveryEntity, 'createdAt' | 'item'>): Promise<IDeliveryEntity>
+  abstract deleteAll(): Promise<void>;
 }
