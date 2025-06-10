@@ -1,9 +1,8 @@
 import { IDeliveryEntity } from "../../entities/delivery/types";
 import { DeliveryDatabaseRepository } from "../../repositories/delivery-database-repository";
-import { ValidationError } from "../../errors/validation-error";
 import { CourierDatabaseRepository } from "../../repositories/courier-database-repository";
 import { ICreateDeliveryUseCaseInputDto } from "./types";
-import { faker } from "@faker-js/faker/.";
+import { NotFoundError } from "../../errors/not-found-error";
 
 export class CreateDeliveryUseCase {
   constructor(
@@ -12,12 +11,12 @@ export class CreateDeliveryUseCase {
   ) {}
 
   async execute(inputDto: ICreateDeliveryUseCaseInputDto): Promise<IDeliveryEntity> {
-    const {courierId, destinyAddress, item, status} = inputDto
+    const { courierId, destinyAddress, item, status} = inputDto
 
     const courier = await this.courierDatabaseRepository.findById(courierId);
  
     if (!courier) {
-      throw new ValidationError('Courier not found.');
+      throw new NotFoundError('Courier not found.');
     }
 
     const deliveryToCreate: Omit<IDeliveryEntity, 'id'> = {
