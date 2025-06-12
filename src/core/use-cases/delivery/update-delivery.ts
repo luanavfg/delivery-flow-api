@@ -12,34 +12,39 @@ export class UpdateDeliveryUseCase {
   ) {}
 
   async execute(data: IUpdateDeliveryUseCaseInputDto): Promise<IDeliveryEntity> {   
-    const {id, status, courierId, destinyAddress} = data 
+    try {
+      const {id, status, courierId, destinyAddress} = data 
 
-    const deliveryFromDatabase = await this.deliveryDatabaseRepository.findById(id)
+      const deliveryFromDatabase = await this.deliveryDatabaseRepository.findById(id)
 
-    if(!deliveryFromDatabase) {
-      throw new NotFoundError('Cannot find delivery in database.');
-    }
-
-    if(deliveryFromDatabase.status === 'CANCELED') {
-      throw new ValidationError('Cannot edit a canceled delivery.');
-    }
-
-    if(courierId) {
-      const courier = await this.courierDatabaseRepository.findById(courierId);
-      
-      if (!courier) {
-        throw new NotFoundError('Courier not found.');
+      if(!deliveryFromDatabase) {
+        throw new NotFoundError('Cannot find delivery in database.');
       }
+
+      if(deliveryFromDatabase.status === 'CANCELED') {
+        throw new ValidationError('Cannot edit a canceled delivery.');
+      }
+
+      if(courierId) {
+        const courier = await this.courierDatabaseRepository.findById(courierId);
+        
+        if (!courier) {
+          throw new NotFoundError('Courier not found.');
+        }
+      }
+
+      const updatedDelivery = this.deliveryDatabaseRepository.update({
+        id,
+        status: status ?? deliveryFromDatabase.status,
+        courierId: courierId ?? deliveryFromDatabase.courierId,
+        destinyAddress: destinyAddress ?? deliveryFromDatabase.destinyAddress,
+        updatedAt: new Date()
+      });
+
+      return updatedDelivery
+    } catch (err) {
+      console.log(err)
+      throw err;
     }
-
-    const updatedDelivery = this.deliveryDatabaseRepository.update({
-      id,
-      status: status ?? deliveryFromDatabase.status,
-      courierId: courierId ?? deliveryFromDatabase.courierId,
-      destinyAddress: destinyAddress ?? deliveryFromDatabase.destinyAddress,
-      updatedAt: new Date()
-    });
-
-    return updatedDelivery
   }
 }

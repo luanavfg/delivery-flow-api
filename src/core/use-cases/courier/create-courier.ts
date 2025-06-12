@@ -6,16 +6,21 @@ export class CreateCourierUseCase {
   constructor(private courierDatabaseRepository: CourierDatabaseRepository) {}
 
   async execute(data: Omit<ICourierEntity, 'id' | 'createdAt' | 'updatedAt'>): Promise<ICourierEntity> {
-    const { email } = data
+    try {
+      const { email } = data
 
-    const emailInDatabase = await this.courierDatabaseRepository.findByEmail(email)
+      const emailInDatabase = await this.courierDatabaseRepository.findByEmail(email)
 
-    if (emailInDatabase) {
-      throw new EmailConflictError()
-    }
+      if (emailInDatabase) {
+        throw new EmailConflictError()
+      }
     
-    return this.courierDatabaseRepository.create({
-      ...data, updatedAt: null
-    });
+      return this.courierDatabaseRepository.create({
+        ...data, updatedAt: null
+      });
+    } catch (err) {
+      console.log(err)
+      throw err;
+    }
   }
 }

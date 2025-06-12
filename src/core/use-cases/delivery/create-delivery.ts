@@ -11,23 +11,28 @@ export class CreateDeliveryUseCase {
   ) {}
 
   async execute(inputDto: ICreateDeliveryUseCaseInputDto): Promise<IDeliveryEntity> {
-    const { courierId, destinyAddress, item, status} = inputDto
+    try {
+      const { courierId, destinyAddress, item, status} = inputDto
 
-    const courier = await this.courierDatabaseRepository.findById(courierId);
+      const courier = await this.courierDatabaseRepository.findById(courierId);
  
-    if (!courier) {
-      throw new NotFoundError('Courier not found.');
-    }
+      if (!courier) {
+        throw new NotFoundError('Courier not found.');
+      }
 
-    const deliveryToCreate: Omit<IDeliveryEntity, 'id'> = {
-      courierId,
-      item,
-      destinyAddress,
-      status,
-      createdAt: new Date(),
-      updatedAt: null
-    }
+      const deliveryToCreate: Omit<IDeliveryEntity, 'id'> = {
+        courierId,
+        item,
+        destinyAddress,
+        status,
+        createdAt: new Date(),
+        updatedAt: null
+      }
 
-    return this.deliveryDatabaseRepository.create(deliveryToCreate);
+      return this.deliveryDatabaseRepository.create(deliveryToCreate);
+    } catch (err) {
+      console.log(err)
+      throw err;
+    }
   }
 }
