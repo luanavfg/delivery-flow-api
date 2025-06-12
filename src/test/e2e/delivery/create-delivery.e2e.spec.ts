@@ -38,7 +38,7 @@ describe('Create Delivery (e2e)', () => {
   it('should return 400 if required fields are missing', async () => {
     const response = await request(app).post('/deliveries').send({
       item: 'Box B',
-      // missing destinyAddress, courierId andf status
+      // missing destinyAddress, courierId and status
     });
 
     expect(response.status).toBe(400);
