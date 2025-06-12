@@ -1,5 +1,6 @@
 import { IDeliveryEntity } from "../../../../core/entities/delivery/types";
 import { DeliveryDatabaseRepository } from "../../../../core/repositories/delivery-database-repository";
+import { DeliveryMapper } from "../mappers/delivery-mapper";
 import { prisma } from "../prisma-client";
 
 export class PrismaDeliveryRepository implements DeliveryDatabaseRepository {
@@ -23,7 +24,8 @@ export class PrismaDeliveryRepository implements DeliveryDatabaseRepository {
 
   async create(data: Omit<IDeliveryEntity, 'id' | 'createdAt'>): Promise<IDeliveryEntity> {
     const delivery = await prisma.delivery.create({ data })
-    return delivery
+    
+    return DeliveryMapper.toDomain(delivery)
   }
 
   async update(inputDto: Omit<IDeliveryEntity, | 'createdAt' | 'item'>): Promise<IDeliveryEntity> {
@@ -34,7 +36,7 @@ export class PrismaDeliveryRepository implements DeliveryDatabaseRepository {
       data: inputDto
     })
 
-    return delivery
+    return DeliveryMapper.toDomain(delivery)
   }
 
   async deleteAll(): Promise<void> {
