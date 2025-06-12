@@ -9,7 +9,7 @@ import { PrismaCourierRepository } from '../../database/prisma/repositories/pris
 const deliveryDatabaseRepository = new PrismaDeliveryRepository();
 const courierDatabaseRepository = new PrismaCourierRepository();
 const createDeliveryUseCase = new CreateDeliveryUseCase(deliveryDatabaseRepository, courierDatabaseRepository);
-const updateDeliveryUseCase = new UpdateDeliveryUseCase(deliveryDatabaseRepository);
+const updateDeliveryUseCase = new UpdateDeliveryUseCase(deliveryDatabaseRepository, courierDatabaseRepository);
 
 export class DeliveryController {
   static create: RequestHandler = async(req, res) => {

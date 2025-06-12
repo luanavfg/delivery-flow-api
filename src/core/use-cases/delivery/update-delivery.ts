@@ -3,21 +3,33 @@ import { DeliveryDatabaseRepository } from "../../repositories/delivery-database
 import { ValidationError } from "../../errors/validation-error";
 import { IUpdateDeliveryUseCaseInputDto } from "./types";
 import { NotFoundError } from "../../errors/not-found-error";
+import { CourierDatabaseRepository } from "../../repositories/courier-database-repository";
 
 export class UpdateDeliveryUseCase {
-  constructor(private deliveryDatabaseRepository: DeliveryDatabaseRepository) {}
+  constructor(
+    private deliveryDatabaseRepository: DeliveryDatabaseRepository,
+    private courierDatabaseRepository: CourierDatabaseRepository
+  ) {}
 
   async execute(data: IUpdateDeliveryUseCaseInputDto): Promise<IDeliveryEntity> {   
     const {id, status, courierId, destinyAddress} = data 
 
-    if(status && status === 'CANCELED') {
+    const deliveryFromDatabase = await this.deliveryDatabaseRepository.findById(id)
+
+    if(!deliveryFromDatabase) {
+      throw new NotFoundError('Cannot find delivery in database.');
+    }
+
+    if(deliveryFromDatabase.status === 'CANCELED') {
       throw new ValidationError('Cannot edit a canceled delivery.');
     }
 
-    const deliveryFromDatabase = await this.deliveryDatabaseRepository.findById(id)
-
-    if (!deliveryFromDatabase) {
-      throw new NotFoundError('Cannot find delivery in database.');
+    if(courierId) {
+      const courier = await this.courierDatabaseRepository.findById(courierId);
+      
+      if (!courier) {
+        throw new NotFoundError('Courier not found.');
+      }
     }
 
     const updatedDelivery = this.deliveryDatabaseRepository.update({
