@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres-test:
+    image: postgres:15
+    container_name: postgres-test
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: testdb
+    volumes:
+      - pgdata_test:/var/lib/postgresql/data
+    networks:
+      - testnet
+
+volumes:
+  pgdata_test:
+
+networks:
+  testnet:
