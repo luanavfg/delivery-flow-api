@@ -10,13 +10,12 @@ describe('Create Delivery (e2e)', () => {
 
   beforeEach(async () => {
     courierDatabaseRepository = new PrismaCourierRepository();
-    await courierDatabaseRepository.deleteAll();
   });
 
   it('should create a delivery successfully', async () => {
     const courier = await courierDatabaseRepository.create({
-      email: 'courier@test.com',
-      name: 'Courier Test',
+      email: 'courier-new@test.com',
+      name: 'Courier Test New',
       updatedAt: null
     });
 

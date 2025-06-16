@@ -15,15 +15,13 @@ describe('Update Delivery (e2e)', () => {
   beforeEach(async () => {
     courierDatabaseRepository = new PrismaCourierRepository();
     deliveryDatabaseRepository = new PrismaDeliveryRepository();
-    
-    await deliveryDatabaseRepository.deleteAll();
-    await courierDatabaseRepository.deleteAll();
+  
   });
 
   it('should update a delivery successfully', async () => {
     const courier = await courierDatabaseRepository.create({
-      email: 'courier@test.com',
-      name: 'Courier Test',
+      email: 'courier-02@test.com',
+      name: 'Courier Test 02',
       updatedAt: null
     });
     courierId = courier.id;
@@ -94,8 +92,8 @@ describe('Update Delivery (e2e)', () => {
 
   it('should return 404 if courier does not exist when updating courierId', async () => {
     const courier = await courierDatabaseRepository.create({
-      email: 'courier@test.com',
-      name: 'Courier Test',
+      email: 'courier-03@test.com',
+      name: 'Courier Test 03',
       updatedAt: null
     });
     courierId = courier.id;
@@ -123,8 +121,8 @@ describe('Update Delivery (e2e)', () => {
 
   it('should update courier successfully when providing valid courierId', async () => {
     const courier = await courierDatabaseRepository.create({
-      email: 'courier@test.com',
-      name: 'Courier Test',
+      email: 'courier-05@test.com',
+      name: 'Courier Test 05',
       updatedAt: null
     });
     courierId = courier.id;
@@ -157,8 +155,8 @@ describe('Update Delivery (e2e)', () => {
 
   it('should maintain unchanged fields when updating only some properties', async () => {
     const courier = await courierDatabaseRepository.create({
-      email: 'courier@test.com',
-      name: 'Courier Test',
+      email: 'fake_courier@test.com',
+      name: 'Fake Courier Test',
       updatedAt: null
     });
     courierId = courier.id;
