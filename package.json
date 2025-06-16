@@ -8,7 +8,7 @@
     "prisma:migrate": "prisma migrate dev --schema=src/adapters/database/prisma/schema.prisma",
     "dev": "ts-node-dev --respawn --transpile-only src/main/server.ts",
     "test:unit": "jest --testMatch '**/*.spec.ts' --testPathIgnorePatterns '.e2e.spec.ts'",
-    "test:e2e": "cross-env NODE_ENV=test jest --config jest.config.ts --testMatch '**/*.e2e.spec.ts'"
+    "test:e2e": "cross-env NODE_ENV=test jest --config jest.config.ts --testMatch '**/*.e2e.spec.ts'"   
   },
   "keywords": [],
   "author": "",
