@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: delivery-api
+  template:
+    metadata:
+      labels:
+        app: delivery-api
+    spec:
+      containers:
+        - name: delivery-api
+          image: delivery-api:latest
+          ports:
+            - containerPort: 3333
+          env:
+            - name: DATABASE_URL
+              value: "postgresql://myuser:mypassword@postgres:5432/myapp?schema=public"
