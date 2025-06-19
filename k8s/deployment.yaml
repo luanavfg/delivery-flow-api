@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: delivery-api
-          image: delivery-api:latest
+          image: luanavfg/delivery-flow-api:latest
           ports:
             - containerPort: 3333
           env:
@@ -34,4 +34,7 @@ spec:
                   name: postgres-secret
                   key: POSTGRES_DB
             - name: DATABASE_URL
-              value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres:5432/$(POSTGRES_DB)?schema=public"
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: DATABASE_URL
