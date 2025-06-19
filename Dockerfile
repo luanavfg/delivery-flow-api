@@ -10,6 +10,12 @@ COPY package.json pnpm-lock.yaml ./
 # Install pnpm and project dependencies
 RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
+# Copy schema
+COPY src/adapters/database/prisma ./src/adapters/database/prisma
+
+# Installl Prisma Client
+RUN pnpm prisma generate --schema=src/adapters/database/prisma/schema.prisma
+
 # Copy the rest of the application code
 COPY . .
 
