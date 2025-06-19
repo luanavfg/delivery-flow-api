@@ -6,7 +6,8 @@ spec:
   selector:
     app: delivery-api
   ports:
-    - port: 3333
+    - protocol: TCP
+      port: 3333
       targetPort: 3333
   type: NodePort
   
