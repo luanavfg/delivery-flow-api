@@ -1,20 +1,25 @@
 ### Get all couriers
-GET http://localhost:3333/couriers
+# GET http://localhost:3333/couriers
+GET http://192.168.49.2:31044/couriers/
+
 Content-Type: application/json
 
 ###
 
 ### Create a new courier
-POST http://localhost:3333/couriers
+# POST http://localhost:3333/couriers
+POST http://192.168.49.2:31044/couriers
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "john.doe@example.com"
+  "name": "John Doe 2",
+  "email": "john.doe.2@example.com"
 }
 
 ###
 
 ### Get courier by ID
-GET http://localhost:3333/couriers/e8303320-569a-4863-8476-5169b1a410da
+# GET http://localhost:3333/couriers/e8303320-569a-4863-8476-5169b1a410da
+GET http://192.168.49.2:31044/couriers/ae7357ec-4146-4d2c-84fe-152dec4887ea
+
 Content-Type: application/json
